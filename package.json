@@ -4,8 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist",
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "vite build",
     "preview": "vite preview"
   },
   "devDependencies": {
@@ -14,6 +16,7 @@
     "vite": "^8.3.6"
   },
   "dependencies": {
+    "gh-pages": "^6.3.0",
     "openai": "^6.49.0"
   }
 }
