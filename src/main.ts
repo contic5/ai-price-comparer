@@ -1,29 +1,37 @@
   
 async function askOpenAI(prompts:string[]) 
 {
-  const start_time: number = Date.now();
 
-  const result = await fetch("/api/openai", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      prompts,
-    }),
-  });
+  let responses=[];
+  for(let i=0;i<prompts.length;i++)
+  {
+    const prompt=prompts[i];
+    const start_time: number = Date.now();
+    const result = await fetch("/api/openai", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        prompt,
+      }),
+    });
+    const end_time: number = Date.now();
+    console.log(`Runtime for Prompt ${i+1}: ${end_time-start_time} ms`);
 
-  const data = await result.json();
-  console.log(data);
-  const responses=data.responses;
-  await handle_responses(responses,start_time);
+    const data = await result.json();
+    const response=data.response;
+    responses.push(response);
+  }
+
+  await handle_responses(responses);
 }
-async function handle_responses(responses:string[],start_time:number)
+async function handle_responses(responses:string[])
 {
   console.log(responses);
 
-  const end_time: number = Date.now();
-  console.log(`Total Runtime: ${end_time-start_time} ms`)
+  //const end_time: number = Date.now();
+  //console.log(`Total Runtime: ${end_time-start_time} ms`)
 
   if(loading_interval)
   {

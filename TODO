@@ -1,2 +1,1 @@
-Put each store price lookup into its own ChatGPT query. This will significantly improve return speed.
-Return speed is more than 30 seconds, which is unacceptably slow.
+Only send one query at a time to api.

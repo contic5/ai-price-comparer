@@ -17,48 +17,30 @@ export default async function handler(req: any, res: any)
 
     try 
     {
-        let { prompts } = req.body;
+        let { prompt } = req.body;
         console.log("Beginning Fetch");
 
-        if (!prompts) {
+        if (!prompt) {
         return res.status(400).json({
-            error: "Missing prompts",
+            error: "Missing prompt",
         });
         }
-        if(prompts.length==0)
-        {
-            return res.status(400).json({
-                error:"No prompts included"
-            });
-        }
-
-
-        let responses:string[]=[];
         
-        for(let i=0;i<prompts.length;i++)
+        const response = await client.responses.create({
+        tools: [
         {
-            const start_time: number = Date.now();
-            const prompt=prompts[i];
-            const response = await client.responses.create({
-            tools: [
-            {
-                type: "web_search"
-            }
-            ],
-            tool_choice: "required",
-            model: "gpt-5-mini",
-            input: prompt,
-            });
-            responses.push(response.output_text);
-
-            const end_time: number = Date.now();
-
-            console.log(`Runtime for Prompt ${i+1}: ${end_time-start_time} ms`);
+            type: "web_search"
         }
+        ],
+        tool_choice: "required",
+        model: "gpt-5-mini",
+        input: prompt,
+        });
+        
         console.log("Fetch Completed");
 
         res.status(200).json({
-        responses: responses,
+        response: response.output_text,
         });
     } 
     catch (error) 
