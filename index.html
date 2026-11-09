@@ -39,7 +39,7 @@
       <label for="store_input_1">Store 1</label> 
     </div>
     <div class="col border bg-secondary">
-      <input class="store_input" id="store_input_4">
+      <input class="store_input" id="store_input_1">
     </div>
   </div>
   <div class="row">
@@ -90,7 +90,7 @@
   <button type="button" id="submit_button">Submit</button>
   <h2 id="results_progress">Results</h2>
   <div id="results">
-    
+
   </div>
   </main>
   </body>
@@ -99,6 +99,6 @@
   <script type="module">
   import {handle_submit,load_test_values} from "/src/main.ts";
   document.getElementById("submit_button").onclick=handle_submit;
-  document.getElementById("load_test_values_button").onclick=load_test_values;
+  document.getElementById("load_test_values_button").onclick=()=>load_test_values(2);
   </script>
 </html>
