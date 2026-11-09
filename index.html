@@ -5,14 +5,100 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@6.0.0-alpha.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-B/GM4XqrwHnWXNOWMbloTmrYXZg10cakYGmpfsR/bbzQ6JAJI4ihuyADKLnBgrCe" crossorigin="anonymous">
-    <link href="src/style.css">
+    <link href="src/style.css" type="text/css" rel="stylesheet">
     <title>ai-price-comparer</title>
   </head>
   <body>
   <main>
   <h1>AI Price Comparer</h1>
+  <p>Enter an item and enter up to five store names and . ChatGPT will provide links to that item and compare the prices across your selected stores.</p>
+  <h2>Item</h2>
+  <div class="container">
+  <div class="row">
+    <div class="col border bg-secondary">
+      <label for="item">Item</label>
+    </div>
+    <div class="col border bg-secondary">
+      <input id="item_input">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col border bg-secondary">
+      <label for="item">Brand</label>
+    </div>
+    <div class="col border bg-secondary">
+      <input id="brand_input">
+    </div>
+  </div>
+  </div>
+
+  <h2>Stores</h2>
+  <div class="container" style="">
+  <div class="row">
+    <div class="col border bg-secondary">
+      <label for="store_input_1">Store 1</label> 
+    </div>
+    <div class="col border bg-secondary">
+      <input class="store_input" id="store_input_4">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col border bg-secondary">
+      <label for="store_input_2">Store 2</label> 
+    </div>
+    <div class="col border bg-secondary">
+      <input class="store_input" id="store_input_2">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col border bg-secondary">
+      <label for="store_input_3">Store 3</label> 
+    </div>
+    <div class="col border bg-secondary">
+      <input class="store_input" id="store_input_3">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col border bg-secondary">
+      <label for="store_input_4">Store 4</label> 
+    </div>
+    <div class="col border bg-secondary">
+      <input class="store_input" id="store_input_4">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col border bg-secondary">
+      <label for="store_input_5">Store 5</label> 
+    </div>
+    <div class="col border bg-secondary">
+      <input class="store_input" id="store_input_5">
+    </div>
+  </div>
+  </div>
+
+  <div class="container">
+  <div class="row">
+    <div class="col border bg-warning">
+      <label for="store_input_5">Warning: Clears all stored values</label> 
+    </div>
+    <div class="col border bg-warning">
+      <button type="button" id="load_test_values_button">Load Test Values</button>
+    </div>
+  </div>
+  </div>
+
+  <button type="button" id="submit_button">Submit</button>
+  <h2 id="results_progress">Results</h2>
+  <div id="results">
+    
+  </div>
   </main>
   </body>
-  <script type="module" src="/src/main.ts"></script>
   <script type="module" src="https://cdn.jsdelivr.net/npm/bootstrap@6.0.0-alpha.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-1a/pXj49ZQ1aHEmrJ+gMw1otqoVsYwlEnlD8mIfY2TV03r20Y0CN7uqx1tQogjPL" crossorigin="anonymous"></script>
+  <script type="module" src="/src/main.ts"></script>
+  <script type="module">
+  import {handle_submit,load_test_values} from "/src/main.ts";
+  document.getElementById("submit_button").onclick=handle_submit;
+  document.getElementById("load_test_values_button").onclick=load_test_values;
+  </script>
 </html>

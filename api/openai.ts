@@ -26,6 +26,12 @@ export default async function handler(req: any, res: any)
         }
 
         const response = await client.responses.create({
+        tools: [
+        {
+            type: "web_search"
+        }
+        ],
+        tool_choice: "required",
         model: "gpt-5-mini",
         input: prompt,
         });
@@ -36,6 +42,7 @@ export default async function handler(req: any, res: any)
     } 
     catch (error) 
     {
+        console.error("ERROR ALERT");
         console.error(error);
 
         res.status(500).json({
