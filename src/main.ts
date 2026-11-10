@@ -2,7 +2,7 @@
 async function askOpenAI(prompts:string[]) 
 {
 
-  let responses=[];
+  let responses:number[]=[];
   for(let i=0;i<prompts.length;i++)
   {
     const prompt=prompts[i];
@@ -21,28 +21,70 @@ async function askOpenAI(prompts:string[])
 
     const data = await result.json();
     const response=data.response;
-    responses.push(response);
+
+    if(is_numeric(response))
+    {
+      responses.push(response);
+    }
+    else
+    {
+      responses.push(-1);
+    }
   }
 
   await handle_responses(responses);
 }
-async function handle_responses(responses:string[])
+async function handle_responses(responses:number[])
 {
   console.log(responses);
 
-  //const end_time: number = Date.now();
-  //console.log(`Total Runtime: ${end_time-start_time} ms`)
-
+  document.getElementById("results_progress")!.innerHTML="Results";
   if(loading_interval)
   {
     clearInterval(loading_interval);
     loading_interval=null;
   }
 
-  document.getElementById("results_progress")!.innerHTML="Results";
-  document.getElementById("results")!.innerHTML="TODO: DISPLAY RESPONSES";
+  //const end_time: number = Date.now();
+  //console.log(`Total Runtime: ${end_time-start_time} ms`)
+  let results=document.getElementById("results") as HTMLDivElement;
+  results.innerHTML="";
+
+  for(let i=0;i<Math.min(responses.length,stores.length);i++)
+  {
+    let row=document.createElement("div");
+    row.classList.add("row");
+    results.appendChild(row);
+
+    let left_column=document.createElement("div");
+    left_column.classList.add("col","border","bg-secondary");
+    left_column.innerHTML=stores[i];
+    row.appendChild(left_column);
+
+    let right_column=document.createElement("div");
+    right_column.classList.add("col","border","bg-secondary");
+    if(responses[i]>=0)
+    {
+      right_column.innerHTML=responses[i].toLocaleString('en-US', {
+        style: 'currency',
+        currency: 'USD',
+      });
+    }
+    else
+    {
+      right_column.innerHTML="Unknown";
+    }
+    row.appendChild(right_column);
+  }
+
 }
 
+function is_numeric(value: string): boolean {
+  if (typeof value !== 'string' || value.trim() === '') {
+    return false;
+  }
+  return Number.isFinite(Number(value));
+}
 function trim_lines(text:string)
 {
   let lines:string[]=text.split("\n");
@@ -67,7 +109,7 @@ export function handle_submit()
 
   let item_input=document.getElementById("item_input") as HTMLInputElement;
   let item=item_input.value;
-  let stores=[];
+  stores=[];
 
   let store_inputs=document.getElementsByClassName("store_input") as HTMLCollectionOf<HTMLInputElement>;
   for(let store_input of store_inputs)
@@ -100,15 +142,18 @@ export function load_test_values(total_inputs_to_fill=2)
   let brand_input=document.getElementById("brand_input") as HTMLInputElement;
   brand_input.value="Eggland";
 
-  let stores=["Shoprite","Kings","Walmart","Trader Joe's","Whole Foods"];
+  stores=["Shoprite","Kings","Walmart","Trader Joe's","Whole Foods"];
   let store_inputs=document.getElementsByClassName("store_input") as HTMLCollectionOf<HTMLInputElement>;
 
   for(let i=0;i<Math.min(store_inputs.length,total_inputs_to_fill);i++)
   {
     store_inputs[i].value=stores[i];
   }
+
+  handle_responses([2,-1,3,4,5])
 }
 
 let loading_interval:number|null=null;
 let dots=3;
+let stores:string[]=[];
 //askOpenAI();
