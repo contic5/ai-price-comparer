@@ -32,6 +32,7 @@ async function askOpenAI(prompts:string[])
     }
   }
 
+  submit_button.disabled=false;
   await handle_responses(responses);
 }
 async function handle_responses(responses:number[])
@@ -104,6 +105,7 @@ function update_loading()
 }
 export function handle_submit()
 {
+  submit_button.disabled=true;
   let brand_input=document.getElementById("brand_input") as HTMLInputElement;
   let brand=brand_input.value;
 
@@ -150,9 +152,10 @@ export function load_test_values(total_inputs_to_fill=2)
     store_inputs[i].value=stores[i];
   }
 
-  handle_responses([2,-1,3,4,5])
+  handle_responses([2,-1])
 }
 
+let submit_button=document.getElementById("submit_button") as HTMLButtonElement;
 let loading_interval:number|null=null;
 let dots=3;
 let stores:string[]=[];

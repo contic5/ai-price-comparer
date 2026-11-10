@@ -33,7 +33,7 @@ export default async function handler(req: any, res: any)
         }
         ],
         tool_choice: "required",
-        model: "gpt-5-mini",
+        model: "gpt-6-luna",
         input: prompt,
         });
         
